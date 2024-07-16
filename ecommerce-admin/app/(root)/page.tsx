@@ -1,12 +1,9 @@
-import { UserButton } from "@clerk/nextjs";
+"use client";
 
-const SetupPage =() => {
-  return (
-    <div className="p-4">
-        <p>This is a protected Route:!</p>
-        <UserButton afterSignOutUrl="/"/>
-    </div>
-);
-}
+import { Modal } from "@/components/ui/modal";
+
+const SetupPage = () => {
+  return <div className="p-4">Root Page </div>;
+};
 
 export default SetupPage;
