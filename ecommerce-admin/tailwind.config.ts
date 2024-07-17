@@ -19,6 +19,19 @@ const config = {
     },
     extend: {
       colors: {
+        
+          transparent: 'transparent',
+          current: 'currentColor',
+          'white': '#ffffff',
+          'purple': '#3f3cbb',
+          'midnight': '#121063',
+          'metal': '#565584',
+          'primary1':'#020403',
+          'tahiti': '#3ab7bf',
+          'silver': '#ecebff',
+          'bubble-gum': '#ff77e9',
+          'bermuda': '#78dcca',
+          'sunset': '#ff8f66',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

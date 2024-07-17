@@ -69,7 +69,7 @@ export default function StoreSwitcher({
           role="combobox"
           aria-expanded={open}
           aria-label="Select a Store"
-          className={cn("w-[200px] justify-between", className)}
+          className={cn("w-[200px] justify-between bg-slate-200 hover:bg-slate-500", className)}
         >
           <StoreIcon className="mr-2 h-4 w-4" />
           {currentStore?.label}
@@ -89,14 +89,14 @@ export default function StoreSwitcher({
                 <CommandItem
                   key={store.value}
                   onSelect={() => onStoreSelect(store)}
-                  className="text-sm text-black  "
+                  className="text-sm text-primary1  "
                 >
-                  <StoreIcon className="mr-2 h-4 w-4 " />
+                  <StoreIcon className="mr-2 h-4 w-4 text-primary1 font-semibold " />
                   {store.label}
                   
                   <Check
                     className={cn(
-                      "ml-auto h-4 w-4",
+                      "ml-auto h-4 w-4 text-primary1",
                       currentStore?.value === store.value
                         ? "opacity-100"
                         : "opacity-0"
@@ -109,18 +109,17 @@ export default function StoreSwitcher({
           </CommandList>
           <CommandSeparator />
           <CommandList>
-            <CommandGroup>
+            <CommandGroup >
               <span onClick={storeModal.onOpen}>
-              <CommandItem
+              <CommandItem 
                 onSelect={() => {
                   setOpen(false);
-                  console.log("CREATE STORE CLICKED");
                   storeModal.onOpen();
                 }}
               >
                 
                 <PlusCircle className="mr-2 h-5 w-5" />
-                Create Store
+                <p className="text-primary1 font-semibold opacity-100 ">Create Store</p>
               </CommandItem>
               </span>
             </CommandGroup>
