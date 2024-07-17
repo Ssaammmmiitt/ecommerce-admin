@@ -10,8 +10,6 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-
-
 import {
   Popover,
   PopoverContent,
@@ -51,11 +49,13 @@ export default function StoreSwitcher({
     value: item.id,
   }));
 
-  const currentStore = formattedItems.find( (item) => item.value === params.storeId);
+  const currentStore = formattedItems.find(
+    (item) => item.value === params.storeId
+  );
 
   const [open, setOpen] = useState(false);
 
-  const onStoreSelect = (store: { value: string, label: string }) => {
+  const onStoreSelect = (store: { value: string; label: string }) => {
     setOpen(false);
     router.push(`/${store.value}`);
   };
@@ -83,13 +83,17 @@ export default function StoreSwitcher({
             <CommandEmpty>No Store Found.</CommandEmpty>
             <CommandGroup heading="Stores">
               {formattedItems.map((store) => (
+                <span key={store.value} onClick={()=>{onStoreSelect(store);
+                  
+                }}>
                 <CommandItem
                   key={store.value}
                   onSelect={() => onStoreSelect(store)}
-                  className="text-sm"
+                  className="text-sm text-black  "
                 >
-                  <StoreIcon className="mr-2 h-4 w-4" />
+                  <StoreIcon className="mr-2 h-4 w-4 " />
                   {store.label}
+                  
                   <Check
                     className={cn(
                       "ml-auto h-4 w-4",
@@ -99,28 +103,30 @@ export default function StoreSwitcher({
                     )}
                   />
                 </CommandItem>
+                </span>
               ))}
             </CommandGroup>
           </CommandList>
           <CommandSeparator />
           <CommandList>
             <CommandGroup>
-            <CommandItem
-              onSelect={() => {
-                setOpen(false);
-                console.log("CREATE STORE CLICKED");
-                storeModal.onOpen();
-              }}
-              className="cursor-pointer"
-            >
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Create Store
-            </CommandItem>
+              <span onClick={storeModal.onOpen}>
+              <CommandItem
+                onSelect={() => {
+                  setOpen(false);
+                  console.log("CREATE STORE CLICKED");
+                  storeModal.onOpen();
+                }}
+              >
+                
+                <PlusCircle className="mr-2 h-5 w-5" />
+                Create Store
+              </CommandItem>
+              </span>
             </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>
-
     </Popover>
   );
 }
