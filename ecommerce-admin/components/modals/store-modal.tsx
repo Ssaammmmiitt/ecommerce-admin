@@ -25,7 +25,7 @@ const formSchema = z.object({
 });
 
 export const StoreModal = () => {
-  const StoreModal = UseStoreModal();
+  const storeModal = UseStoreModal();
 
   const [loading, setLoading] = useState(false);
 
@@ -53,8 +53,8 @@ export const StoreModal = () => {
     <Modal
       title="Create Store"
       description="Add a new store to manage products and categories"
-      isOpen={StoreModal.isOpen}
-      onClose={StoreModal.onClose}
+      isOpen={storeModal.isOpen}
+      onClose={storeModal.onClose}
     >
       <div>
         <div className="space-y-4 py-2 pb-4">
@@ -81,7 +81,7 @@ export const StoreModal = () => {
                 <Button
                   disabled={loading}
                   variant="outline"
-                  onClick={StoreModal.onClose}
+                  onClick={storeModal.onClose}
                 >
                   Cancel
                 </Button>
