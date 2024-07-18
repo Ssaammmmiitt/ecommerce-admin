@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
+import ImageUpload from "@/components/ui/image-upload";
 
 import {
   Form,
@@ -120,6 +121,23 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           onSubmit={form.handleSubmit(onSumbit)}
           className="space-y-8 w-full"
         >
+           <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Background Image</FormLabel>
+                  <FormControl>
+                    <ImageUpload 
+                    value={field.value ? [field.value]:[]}
+                    disabled={loading}
+                    onChange={(url)=>field.onChange(url)}
+                    onRemove={()=> field.onChange("")}/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
