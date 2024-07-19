@@ -48,11 +48,10 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit Billboard": "New Billboard";
-  const description = initialData ? "Edit a Billboard": "Add a new Billboard";
-  const toastMessgae = initialData ? "Billboard updated.": "Billboard created";
-  const action = initialData ? "Save Changes": "Create";
-
+  const title = initialData ? "Edit Billboard" : "New Billboard";
+  const description = initialData ? "Edit a Billboard" : "Add a new Billboard";
+  const toastMessgae = initialData ? "Billboard updated." : "Billboard created";
+  const action = initialData ? "Save Changes" : "Create";
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
@@ -65,9 +64,14 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const onSumbit = async (data: BillboardFormValues) => {
     try {
       setLoading(true);
-      await axios.patch(`/api/stores/${params.storeId}`, data);
+      if (initialData) {
+        await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+      } else {
+        await axios.post(`/api/${params.storeId}/billboards`, data);
+      }
       router.refresh();
-      toast.success("Store Updated!");
+      router.push(`/${params.storeId}/billboards`)
+      toast.success(toastMessgae);
     } catch (error) {
       toast.error("Something Went Wrong");
     } finally {
@@ -78,12 +82,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
       router.refresh();
       router.push("/");
-      toast.success("Store Deleted!!");
+      toast.success("Billboard Deleted!!");
     } catch (error) {
-      toast.error("Make sure you removed all products and categories first.");
+      toast.error("Make sure you removed all categories using this billboard first.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -103,16 +107,16 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       <div className="flex items-center justify-between">
         <Heading title={title} description={description} />
         {initialData && (
-        <Button
-          disabled={loading}
-          variant="destructive"
-          size="sm"
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          <Trash2 className="w-4 h-4" />
-        </Button>
+          <Button
+            disabled={loading}
+            variant="destructive"
+            size="sm"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
         )}
       </div>
       <Separator />
@@ -121,23 +125,24 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           onSubmit={form.handleSubmit(onSumbit)}
           className="space-y-8 w-full"
         >
-           <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Background Image</FormLabel>
-                  <FormControl>
-                    <ImageUpload 
-                    value={field.value ? [field.value]:[]}
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Background Image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
                     disabled={loading}
-                    onChange={(url)=>field.onChange(url)}
-                    onRemove={()=> field.onChange("")}/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
@@ -163,7 +168,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         </form>
       </Form>
       <Separator />
-      
     </>
   );
 };
