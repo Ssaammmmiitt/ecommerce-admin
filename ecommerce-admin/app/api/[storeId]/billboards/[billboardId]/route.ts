@@ -13,11 +13,15 @@ export async function GET(
       }
 
         
-      const billboard = await prismadb.store.findUnique({
+      const billboard = await prismadb.billboard.findUnique({
         where: {
           id: params.billboardId,
         },
       });
+
+      if (!billboard) {
+        return new NextResponse("Billboard not found", { status: 404 });
+      }
   
       return NextResponse.json(billboard);
     } catch (error) {
@@ -62,7 +66,7 @@ export async function PATCH(
       }
   
 
-    const billboard = await prismadb.billboard.updateMany({
+    const billboard = await prismadb.billboard.update({
       where: {
         id: params.billboardId,
       },
@@ -106,7 +110,7 @@ export async function DELETE(
       }
 
       
-    const billboard = await prismadb.store.deleteMany({
+    const billboard = await prismadb.billboard.deleteMany({
       where: {
         id: params.billboardId,
       },
