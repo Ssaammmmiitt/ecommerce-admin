@@ -13,12 +13,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { ColorColumn } from "./columns";
+import { ProductColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 import { AlertModal } from "@/components/modals/alert-model";
 
 interface CellActionProps {
-  data: ColorColumn;
+  data: ProductColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -30,23 +30,23 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Color Id copied to the clipboard");
+    toast.success("Billboard Id copied to the clipboard");
   };
 
   const onDelete = async () => {
     try {
       setLoading(true);
       await axios.delete(
-        `/api/${params.storeId}/colors/${data.id}`
+        `/api/${params.storeId}/billboards/${data.id}`
       );
       router.refresh();
-      router.push(`/${params.storeId}/colors`);
+      router.push(`/${params.storeId}/billboards`);
       router.refresh();
       // window.location.reload();
-      toast.success("Color Deleted!!");
+      toast.success("Billboard Deleted!!");
     } catch (error) {
       toast.error(
-        "Make sure you removed all products using this color first."
+        "Make sure you removed all categories using this billboard first."
       );
     } finally {
       setLoading(false);
@@ -77,7 +77,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              router.push(`/${params.storeId}/colors/${data.id}`
+              router.push(`/${params.storeId}/products/${data.id}`
               );
               router.refresh();
             }}
