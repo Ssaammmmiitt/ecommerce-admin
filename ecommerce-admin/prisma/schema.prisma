@@ -84,8 +84,8 @@ model Product {
   id         String   @id @default(uuid())
   storeId    String
   store      Store    @relation("StoreToProduct", fields: [storeId], references: [id])
-  categoryID String
-  category   Category @relation("CategoryToProduct", fields: [categoryID], references: [id])
+  categoryId String
+  category   Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
   name String
   price Decimal
   isFeatured Boolean @default(false)
