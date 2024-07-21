@@ -30,23 +30,23 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Billboard Id copied to the clipboard");
+    toast.success("Product Id copied to the clipboard");
   };
 
   const onDelete = async () => {
     try {
       setLoading(true);
       await axios.delete(
-        `/api/${params.storeId}/billboards/${data.id}`
+        `/api/${params.storeId}/products/${data.id}`
       );
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/products`);
       router.refresh();
       // window.location.reload();
-      toast.success("Billboard Deleted!!");
+      toast.success("Product Deleted!!");
     } catch (error) {
       toast.error(
-        "Make sure you removed all categories using this billboard first."
+        "Something went wrong, Please try again later!"
       );
     } finally {
       setLoading(false);
